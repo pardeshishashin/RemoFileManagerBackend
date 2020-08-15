@@ -5,7 +5,10 @@ const remoSchema = mongoose.Schema({
       type: String
   },
   subFolder: [],
-  files: []
+  files: [],
+  parent: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model('Filedata',remoSchema);

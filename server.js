@@ -66,7 +66,8 @@ app.post("/createFolder", (req,res,next) => {
   const data = new remofile({
       folderName: folderName,
       subFolder: [],
-      files: []
+      files: [],
+      parent: req.body.parent
   });
   data.save().then(data => {
     
@@ -98,9 +99,9 @@ app.put("/updateFolder/:data", multer({ storage: storage }).single("image"), (re
  
 });
 
-app.get("/show/:data", (req,res,next) => {
+app.get("/show/:id", (req,res,next) => {
   // console.log(req.params.data);
-  remofile.findOne({folderName: req.params.data}).then((result) =>{
+  remofile.findOne({_id: req.params.id}).then((result) =>{
     console.log(result);
     res.send(result);
 });
@@ -122,8 +123,8 @@ app.get("/subFolder/:id", (req,res,next) => {
 });
 app.get("/showFolder", (req,res,next) => {
   // console.log(req.params.data);
-  remofile.find().then((result) =>{
-    // console.log(result);
+  remofile.find({parent: null}).then((result) =>{
+     console.log(result);
     res.send(result);
 });
 });
